@@ -17,23 +17,29 @@ Node* SortedInsert(Node *head,int data)
     x->data=data;
     if(head==NULL){
         x->next=NULL;
+        x->prev=NULL;
         return x;
     }
     
     if(head->next==NULL){
         if(head->data>data){
             x->next=head;
+            x->prev=NULL;
+            head->prev=x;
             return x;
         }
         else{
             head->next=x;
             x->next=NULL;
+            x->prev=head;
             return head;
         }
     }
     
     if(data<head->data){
         x->next=head;
+        head->prev=x;
+        x->prev= NULL;
         return x;
     }
     
@@ -43,6 +49,8 @@ Node* SortedInsert(Node *head,int data)
         temp=temp->next;
     }
     x->next=temp->next;
+    x->prev=temp;
+    temp->next->prev=x;
     temp->next=x;
     return head;
 }
